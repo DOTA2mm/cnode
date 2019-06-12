@@ -1,16 +1,15 @@
 {
+  "root": true,
+  "extends": ["airbnb", "prettier", "plugin:jest/recommended"],
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "node": true,
+    "jasmine": true,
+    "jest": true
   },
-  "extends": [
-    "standard",
-    "plugin:react/recommended"
-  ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
+  "parser": "babel-eslint",
+  "plugins": ["react", "babel", "jest"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
@@ -19,9 +18,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "react"
-  ],
   "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".md"] }]
   }
 }
