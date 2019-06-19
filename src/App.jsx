@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { HashRouter, Route, Redirect } from 'react-router-dom';
+import Header from './components/Header/Index';
 import './App.css';
 
 class App extends Component {
