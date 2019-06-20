@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 import Header from './components/Header/Index';
 import Home from './views/Home/Index';
 import './App.css';
 
-class App extends Component {
+class App extends React.PureComponent {
   render() {
     return (
       <div>
