@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import * as React from "react"
 import './Index.less'
 import { Modal, Icon } from 'antd'
@@ -20,14 +21,16 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div styleName="header">
+      <div className="header">
         <div>
-          <a href="/"><img src="@src/assets/image/cnodejs.svg" alt="log" /></a>
+          <a href="/"><img src={require('@src/assets/image/cnodejs.svg')} alt="log" /></a>
           <span onClick={this.showModel}>关于</span>
         </div>
         <Modal
           title="关于本项目"
           visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleOk}
         >
           <p>
             作者：

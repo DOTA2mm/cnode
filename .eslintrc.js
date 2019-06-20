@@ -41,6 +41,7 @@ module.exports = {
     "react/destructuring-assignment": [1, "always", { "ignoreClassFields": true }],
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    "react/prefer-stateless-function": "warn"
   }
 }

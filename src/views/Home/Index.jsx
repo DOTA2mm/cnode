@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { getTopics } from '@src/utils/api'
 // import Topics from '@src/components/Topics/Index'
 import './Index.less'
-import { Tabs, Spin } from 'antd'
+import { Spin } from 'antd'
 
-const TabPane = Tabs.TabPane
+// const { TabPane } = Tabs
 
 /**
  * 网站首页
@@ -50,14 +50,14 @@ class Home extends Component {
     }).then(res => {
       const store = state.store
 
-      this.setState(prevState => ({
-        list: res.data,
-        limit: prevState.limit + 10
-      }))
-      // this.setState({
+      // this.setState(prevState => ({
       //   list: res.data,
-      //   limit: this.state.limit + 10
-      // })
+      //   limit: prevState.limit + 10
+      // }))
+      this.setState({
+        list: res.data,
+        limit: this.state.limit + 10
+      })
       // 将数据存储到对应的key下
       store[state.tab] = {
         limit: state.limit,
@@ -115,14 +115,10 @@ class Home extends Component {
 
   render() {
     return (
-      <div styleName="home">
+      <div className="home">
         <Spin spinning={false}>
           <div>
-            <Tabs defaultActiveKey="" onChange={this.tabChanged}>
-              <TabPane tab="全部" key="all">
-                {this.state.list}
-              </TabPane>
-            </Tabs>
+
           </div>
         </Spin>
       </div>
