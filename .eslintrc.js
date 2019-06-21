@@ -30,10 +30,10 @@ module.exports = {
       "webpack": {
         "config": {
           "resolve": {
-            "alias": {"@src": path.resolve(__dirname, 'src')}
+            "alias": {"@src": path.resolve(__dirname, 'src')},
+            "extensions": [".js",".jsx"]
           }
         },
-        "extensions": [".js",".jsx"]
       },
     }
   },
