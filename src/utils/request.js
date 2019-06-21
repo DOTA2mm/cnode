@@ -21,7 +21,7 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  respones => respones,
+  respones => respones.data,
   err => {
     error()
     return Promise.reject(err)

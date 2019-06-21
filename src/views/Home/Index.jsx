@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { getTopics } from '@src/utils/api'
-// import Topics from '@src/components/Topics/Index'
+import Topics from '@src/components/Topics/Index'
 import './Index.less'
-import { Spin } from 'antd'
+import { Spin, Tabs } from 'antd'
 
-// const { TabPane } = Tabs
+const { TabPane } = Tabs
 
 /**
  * 网站首页
@@ -50,14 +50,14 @@ class Home extends Component {
     }).then(res => {
       const store = state.store
 
-      // this.setState(prevState => ({
-      //   list: res.data,
-      //   limit: prevState.limit + 10
-      // }))
-      this.setState({
+      this.setState(prevState => ({
         list: res.data,
-        limit: this.state.limit + 10
-      })
+        limit: prevState.limit + 10
+      }))
+      // this.setState({
+      //   list: res.data,
+      //   limit: this.state.limit + 10
+      // })
       // 将数据存储到对应的key下
       store[state.tab] = {
         limit: state.limit,
@@ -118,7 +118,23 @@ class Home extends Component {
       <div className="home">
         <Spin spinning={false}>
           <div>
-
+            <Tabs defaultActiveKey="" onChange={this.tabChanged}>
+              <TabPane tab="全部" key="all">
+                <Topics list={this.state.list} />
+              </TabPane>
+              <TabPane tab="精华" key="good">
+                <Topics list={this.state.list} />
+              </TabPane>
+              <TabPane tab="分享" key="share">
+                <Topics list={this.state.list} />
+              </TabPane>
+              <TabPane tab="问答" key="ask">
+                <Topics list={this.state.list} />
+              </TabPane>
+              <TabPane tab="工作" key="job">
+                <Topics list={this.state.list} />
+              </TabPane>
+            </Tabs>
           </div>
         </Spin>
       </div>

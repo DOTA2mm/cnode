@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import * as React from "react"
+import * as React from 'react'
 import './Index.less'
 import { Modal, Icon } from 'antd'
 
