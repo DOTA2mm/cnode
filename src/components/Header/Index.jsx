@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import * as React from 'react'
-import './Index.less'
 import { Modal, Icon } from 'antd'
+import style from './Index.module.less'
 
 class Header extends React.Component {
   // 实例属性的新写法
@@ -21,7 +21,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="header">
+      <div className={style.header}>
         <div>
           <a href="/"><img src={require('@src/assets/image/cnodejs.svg')} alt="log" /></a>
           <span onClick={this.showModel}>关于</span>

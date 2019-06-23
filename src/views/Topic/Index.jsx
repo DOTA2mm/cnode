@@ -5,6 +5,7 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Divider, Skeleton } from 'antd'
+import ProfilePanel from '@src/components/ProfilePanel/Index'
 import moment from 'moment'
 import { getTopicById } from '../../utils/api'
 import '@src/assets/style/mdstyle.css'
@@ -91,6 +92,9 @@ class Topic extends React.Component {
             className={style.content}
             dangerouslySetInnerHTML={this.getHTML(this.state.topic.content)}
           />
+        </div>
+        <div className={style.right}>
+          <ProfilePanel loginname={this.state.topic.loginname} />
         </div>
       </div>
     )
