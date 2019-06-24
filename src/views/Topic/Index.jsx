@@ -8,6 +8,7 @@ import { Divider, Skeleton } from 'antd'
 import ProfilePanel from '@src/components/ProfilePanel/Index'
 import OtherTopic from '@src/components/OtherTopic/Index'
 import RecentReply from '@src/components/RecentReply/Index'
+import Reply from '@src/components/Reply/Index'
 import moment from 'moment'
 import { getTopicById } from '../../utils/api'
 import '@src/assets/style/mdstyle.css'
@@ -94,6 +95,7 @@ class Topic extends React.Component {
             className={style.content}
             dangerouslySetInnerHTML={this.getHTML(this.state.topic.content)}
           />
+          <Reply data={this.state.topic.replies} />
         </div>
         <div className={style.right}>
           <ProfilePanel loginname={this.state.topic.loginname} />
