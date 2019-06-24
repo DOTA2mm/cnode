@@ -27,8 +27,14 @@ class ProfilePanel extends React.Component {
     this.fetchData(this.props.loginname)
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.fetchData(nextProps.loginname)
+  // componentWillReceiveProps (nextProps) {
+  //   this.fetchData(nextProps.loginname)
+  // }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.loginname !== prevProps.loginname) {
+      this.fetchData(this.props.loginname)
+    }
   }
 
   async fetchData (loginname) {
