@@ -496,3 +496,7 @@ footer {
 .html-for-mac .context-menu {
   --item-hover-bg-color: #E6F0FE;
 }
+
+.markdown-text p, .preview p {
+  white-space: pre-wrap;
+}

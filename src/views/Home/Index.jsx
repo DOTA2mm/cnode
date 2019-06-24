@@ -118,7 +118,7 @@ class Home extends Component {
       <div className="home">
         <Spin spinning={false}>
           <div>
-            <Tabs defaultActiveKey="" onChange={this.tabChanged}>
+            <Tabs defaultActiveKey="all" onChange={this.tabChanged}>
               <TabPane tab="全部" key="all">
                 <Topics list={this.state.list} />
               </TabPane>
