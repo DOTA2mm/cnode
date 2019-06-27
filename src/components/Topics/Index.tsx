@@ -1,24 +1,29 @@
 /**
  * 首页帖子列表
  */
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Tag, Skeleton } from 'antd'
+import { IArticle } from '@src/types/index'
 import tabs from '@src/utils/tabs'
+import { Skeleton, Tag } from 'antd'
 import moment from 'moment'
+import PropTypes, { string } from 'prop-types'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
 import style from './Index.module.less'
 
-class Topics extends React.PureComponent {
-  static propTypes = {
+interface IListProps {
+  list: IArticle[]
+}
+
+class Topics extends React.PureComponent<IListProps> {
+  public static propTypes = {
     list: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.object])).isRequired
   }
 
-  render () {
+  public render() {
     if (this.props.list.length === 0) {
-      return <Skeleton active />
+      return <Skeleton active={true} />
     }
-    const items = this.props.list.map(item => {
+    const items = this.props.list.map((item) => {
       return (
         <div className={style.topic} key={item.id}>
           <Link to={`/user/${item.author.loginname}`}>

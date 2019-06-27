@@ -2,19 +2,24 @@
 /**
  * 帖子评论
  */
-import React, { PureComponent } from 'react'
+import { IReply } from '@src/types/index'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import style from './Index.module.less'
 
-function getHTML (html) {
+interface IDataProps {
+  data: IReply[]
+}
+
+function getHTML(html: string) {
   return {
     __html: html
   }
 }
 
-function getThumbs (length) {
+function getThumbs(length: number) {
   if (!length) {
     return <span />
   }
@@ -26,19 +31,19 @@ function getThumbs (length) {
   )
 }
 
-class Reply extends PureComponent {
-  static propTypes = {
+class Reply extends PureComponent<IDataProps> {
+  public static propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
       author: PropTypes.shape({
-        loginname: PropTypes.string,
-        avatar_url: PropTypes.string
+        avatar_url: PropTypes.string,
+        loginname: PropTypes.string
       }),
-      create_at: PropTypes.string,
-      content: PropTypes.string.isRequired
+      content: PropTypes.string.isRequired,
+      create_at: PropTypes.string
     })).isRequired
   }
 
-  render() {
+  public render() {
     const data = this.props.data.map((reply, index) => {
       return (
         <div key={reply.id}>
@@ -57,9 +62,7 @@ class Reply extends PureComponent {
                 </Link>
                 <span>
                   &nbsp;
-                  {moment(reply.create_at, 'YYYY-MM-DD')
-                    .startOf('day')
-                    .fromNow()}
+                  {moment(reply.create_at, 'YYYY-MM-DD').startOf('day').fromNow()}
                 </span>
               </p>
               {getThumbs(reply.ups.length)}

@@ -1,25 +1,25 @@
 /* eslint-disable global-require */
+import { Icon, Modal } from 'antd'
 import * as React from 'react'
-import { Modal, Icon } from 'antd'
 import style from './Index.module.less'
 
 class Header extends React.Component {
   // 实例属性的新写法
-  state = { visible: false }
+  public state = { visible: false }
 
-  handleOk = () => {
+  public handleOk = () => {
     this.setState({
       visible: false
     })
   }
 
-  showModel = () => {
+  public showModel = () => {
     this.setState({
       visible: true
     })
   }
 
-  render() {
+  public render() {
     return (
       <div className={style.header}>
         <div>

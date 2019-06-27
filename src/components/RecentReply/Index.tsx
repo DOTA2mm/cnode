@@ -1,33 +1,44 @@
 /**
  * 话题作者的最近回复
  */
-import * as React from 'react'
-import { Link } from 'react-router-dom'
+import { IUserData } from '@src/types/index';
+import eventProxy from '@src/utils/eventProxy'
 import { Divider } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import eventProxy from '@src/utils/eventProxy'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
 import style from './Index.module.less'
 
-class RecentReply extends React.Component {
-  static defaultProps = {
+interface ISimpleProps {
+  simple: boolean
+}
+
+interface IUserState {
+  user: IUserData
+}
+
+class RecentReply extends React.Component<ISimpleProps, IUserState> {
+  public static defaultProps = {
     simple: true
   }
 
-  static propTypes = {
+  public static propTypes = {
     simple: PropTypes.bool
   }
 
-  constructor () {
-    super()
+  private isUnmounted: boolean
+
+  constructor(props: ISimpleProps) {
+    super(props)
     this.state = {
-      user: {}
+      user: {} as IUserData
     }
+    this.isUnmounted = false
   }
 
-  componentDidMount () {
-    this.isUnmounted = false
-    eventProxy.on('user', data => {
+  public componentDidMount() {
+    eventProxy.on('user', (data: IUserData) => {
       if (!this.isUnmounted) {
         this.setState({
           user: data
@@ -37,16 +48,16 @@ class RecentReply extends React.Component {
   }
 
   // 又一个即将被废弃的钩子，用 useEffect hook 可以代替（返回函数）
-  componentWillUnmount () {
+  public componentWillUnmount() {
     this.isUnmounted = true
   }
 
-  render () {
+  public render() {
     if (!this.state.user.recent_replies) {
       return <div />
     }
 
-    const items = this.state.user.recent_replies.map(item => {
+    const items = this.state.user.recent_replies.map((item) => {
       let temp = <Link to={`/topic/${item.id}`}>{item.title}</Link>
       // 非简单模式
       if (!this.props.simple) {
@@ -57,9 +68,7 @@ class RecentReply extends React.Component {
             </Link>
             <Link key={item.id} to={`/topic/${item.id}`}>{item.title}</Link>
             <span className={style.time}>
-              {moment(item.last_reply_at, 'YYYY-MM-DD')
-              .startOf('day')
-              .fromNow()}
+              {moment(item.last_reply_at, 'YYYY-MM-DD').startOf('day').fromNow()}
             </span>
             <Divider className={style['insider-divider']} />
           </div>

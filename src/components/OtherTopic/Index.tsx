@@ -1,26 +1,31 @@
 /**
  * 作者其它话题
  */
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { ITopic, IUserData } from '@src/types/index';
+import eventProxy from '@src/utils/eventProxy'
 import { Divider } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import eventProxy from '@src/utils/eventProxy'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import style from './Index.module.less'
 
-function OtherTopic (props) {
-  const [user, setUser] = useState({})
+interface IProps {
+  simple: boolean
+}
+
+function OtherTopic(props: IProps) {
+  const [user, setUser] = useState<IUserData>({} as IUserData)
   const [isUnmounted, setIsUnmounted] = useState(false)
 
   useEffect(() => {
-    eventProxy.on('user', data => {
+    eventProxy.on('user', (data: IUserData) => {
       if (!isUnmounted) {
         setUser(data)
       }
     })
 
-    return function cleanup () {
+    return function cleanup() {
       setIsUnmounted(true)
     }
   })
@@ -29,7 +34,7 @@ function OtherTopic (props) {
     return <div />
   }
 
-  const items = user.recent_topics.map(item => {
+  const items = user.recent_topics.map((item: ITopic) => {
     let temp = <Link to={`/topic/${item.id}`}>{item.title}</Link>
     // 非简单模式
     if (!props.simple) {
@@ -40,9 +45,7 @@ function OtherTopic (props) {
           </Link>
           <Link key={item.id} to={`/topic/${item.id}`}>{item.title}</Link>
           <span className={style.time}>
-            {moment(item.last_reply_at, 'YYYY-MM-DD')
-            .startOf('day')
-            .fromNow()}
+            {moment(item.last_reply_at, 'YYYY-MM-DD').startOf('day').fromNow()}
           </span>
           <Divider className={style['insider-divider']} />
         </div>

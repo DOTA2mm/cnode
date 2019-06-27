@@ -1,29 +1,38 @@
 /**
  * 帖子详情页 - 楼主个人信息
  */
-import * as React from 'react'
-import { Link } from 'react-router-dom'
+import { IUserData } from '@src/types/index';
+import { getUserByName } from '@src/utils/api'
+import eventProxy from '@src/utils/eventProxy'
 import { Skeleton } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { getUserByName } from '@src/utils/api'
-import eventProxy from '@src/utils/eventProxy'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
 import style from './Index.module.less'
 
-class ProfilePanel extends React.Component {
-  static propTypes = {
+interface ILoginnameProps {
+  loginname: string
+}
+
+interface IUserState {
+  user: IUserData
+}
+
+class ProfilePanel extends React.Component<ILoginnameProps, IUserState> {
+  public static propTypes = {
     loginname: PropTypes.string.isRequired
   }
 
-  constructor (props) {
+  constructor(props: ILoginnameProps) {
     super(props)
     this.state = {
       // 用户相关信息
-      user: {}
+      user: {} as IUserData
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     if (this.props.loginname) {
       this.fetchData(this.props.loginname)
     }
@@ -33,13 +42,13 @@ class ProfilePanel extends React.Component {
   //   this.fetchData(nextProps.loginname)
   // }
 
-  componentDidUpdate (prevProps) {
+  public componentDidUpdate(prevProps: ILoginnameProps) {
     if (this.props.loginname !== prevProps.loginname) {
       this.fetchData(this.props.loginname)
     }
   }
 
-  async fetchData (loginname) {
+  public async fetchData(loginname: string) {
     const res = await getUserByName(loginname)
     eventProxy.trigger('user', res.data)
     this.setState({
@@ -47,9 +56,9 @@ class ProfilePanel extends React.Component {
     })
   }
 
-  render () {
+  public render() {
     if (!this.state.user.loginname) {
-      return <Skeleton active />
+      return <Skeleton active={true} />
     }
     return (
       <div className={style.panel}>
@@ -72,10 +81,7 @@ class ProfilePanel extends React.Component {
           </a>
         </div>
         <div>
-          注册时间：
-          {moment(this.state.user.create_at, 'YYYY-MM-DD')
-            .startOf('day')
-            .fromNow()}
+          注册时间：{moment(this.state.user.create_at, 'YYYY-MM-DD') .startOf('day') .fromNow()}
         </div>
       </div>
     )

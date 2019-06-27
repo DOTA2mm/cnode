@@ -4,7 +4,8 @@ const {
   addDecoratorsLegacy,
   addWebpackAlias,
   addLessLoader,
-  addBabelPlugin
+  addBabelPlugin,
+  disableEsLint
 } = require('customize-cra');
 const path = require('path');
 
@@ -26,5 +27,6 @@ module.exports = override(
     javascriptEnabled: true,
   }),
   rewiredMap(),
-  addBabelPlugin('@babel/plugin-syntax-dynamic-import')
+  addBabelPlugin('@babel/plugin-syntax-dynamic-import'),
+  disableEsLint()
 );
