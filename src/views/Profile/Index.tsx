@@ -1,15 +1,24 @@
 /**
  * 用户主页
  */
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import ProfilePanel from '@src/components/ProfilePanel/Index'
 import OtherTopic from '@src/components/OtherTopic/Index'
+import ProfilePanel from '@src/components/ProfilePanel/Index'
 import RecentReply from '@src/components/RecentReply/Index'
+import { IUserData } from '@src/types/index';
+import PropTypes from 'prop-types'
+import * as React from 'react'
 import style from './Index.less'
 
-class Profile extends React.Component {
-  static propTypes = {
+interface IProps {
+  match: {
+    params: {
+      id: string
+    }
+  }
+}
+
+class Profile extends React.Component<IProps, IUserData> {
+  public static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.node,
@@ -17,37 +26,37 @@ class Profile extends React.Component {
     }).isRequired
   }
 
-  constructor () {
-    super()
+  constructor(props: IProps) {
+    super(props)
     this.state = {
       loginname: ''
-    }
+    } as IUserData
   }
 
   /**
-  * 此处如果使用 componentWillMount 来 setStare，则首次 render 的 loginname 有值
-  * 但是，componentWillMount 为即将废弃的钩子，故在 ProfilePanel 处理 props 为空的情况
-  */
-  componentDidMount () {
+   * 此处如果使用 componentWillMount 来 setStare，则首次 render 的 loginname 有值
+   * 但是，componentWillMount 为即将废弃的钩子，故在 ProfilePanel 处理 props 为空的情况
+   */
+  public componentDidMount() {
     this.setState({
       loginname: this.props.match.params.id
     })
   }
 
-  componentDidUpdate (prevProps) {
+  public componentDidUpdate(prevProps: IProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       // this.setState({
       //   loginname: prevProps.match.params.id
       // })
-      this.updateState({loginname: this.props.match.params.id})
+      this.updateState({loginname: this.props.match.params.id} as IUserData)
     }
   }
 
-  updateState (state) {
+  public updateState(state: IUserData) {
     this.setState(state)
   }
 
-  render () {
+  public render() {
     return (
       <div className={style.user}>
         <ProfilePanel loginname={this.state.loginname} />

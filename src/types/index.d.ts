@@ -1,3 +1,5 @@
+declare function require(moduleName: string): any;
+
 export interface ITopic {
   id: string,
   last_reply_at: string,

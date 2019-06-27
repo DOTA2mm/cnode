@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { message } from 'antd'
+import axios from 'axios'
 
 const error = () => {
   message.error('数据加载失败！', 1)
@@ -12,8 +12,8 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(
-  config => config,
-  err => {
+  (config) => config,
+  (err) => {
     error()
     return Promise.reject(err)
   }
@@ -21,8 +21,8 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  respones => respones.data,
-  err => {
+  (respones) => respones.data,
+  (err) => {
     error()
     return Promise.reject(err)
   }

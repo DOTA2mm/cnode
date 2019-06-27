@@ -1,20 +1,24 @@
 import * as React from 'react';
-import Loadable from 'react-loadable';
+// import Loadable from 'react-loadable';
 import { HashRouter, Redirect, Route } from 'react-router-dom';
 // import Home from './views/Home/Index';
 // import Topic from './views/Topic/Index';
 // import Profile from './views/Profile/Index';
 import './App.css';
 import Header from './components/Header/Index';
+// tslint:disable-next-line:no-var-requires
+const Loadable = require('react-loadable')
 
 const LoadableHome = Loadable({
   loader: () => import('./views/Home/Index'),
   loading: () => null
 })
+
 const LoadableTopic = Loadable({
   loader: () => import('./views/Topic/Index'),
   loading: () => null
 })
+
 const LoadableProfile = Loadable({
   loader: () => import('./views/Profile/Index'),
   loading: () => null

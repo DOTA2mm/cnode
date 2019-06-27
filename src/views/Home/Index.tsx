@@ -2,7 +2,7 @@ import Topics from '@src/components/Topics/Index'
 import { IArticle } from '@src/types/index'
 import { getTopics } from '@src/utils/api'
 import { Spin, Tabs } from 'antd'
-import React, { Component } from 'react'
+import * as React from 'react'
 import './Index.less'
 
 const { TabPane } = Tabs
@@ -23,7 +23,7 @@ interface IState {
 /**
  * 网站首页
  */
-class Home extends Component<any, IState> {
+class Home extends React.Component<any, IState> {
   constructor(props: {}) {
     super(props)
     this.state = {

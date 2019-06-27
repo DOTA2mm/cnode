@@ -1,22 +1,35 @@
 /**
  * 帖子详情页面
  */
-import * as React from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { Divider, Skeleton } from 'antd'
-import ProfilePanel from '@src/components/ProfilePanel/Index'
+import '@src/assets/style/mdstyle.css'
 import OtherTopic from '@src/components/OtherTopic/Index'
+import ProfilePanel from '@src/components/ProfilePanel/Index'
 import RecentReply from '@src/components/RecentReply/Index'
 import Reply from '@src/components/Reply/Index'
+import { IArticle } from '@src/types/index';
+import { Divider, Skeleton } from 'antd'
 import moment from 'moment'
+import PropTypes from 'prop-types'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { getTopicById } from '../../utils/api'
-import '@src/assets/style/mdstyle.css'
-import style from './Index.module.less'
 import tabs from '../../utils/tabs'
+import style from './Index.module.less'
 
-class Topic extends React.Component {
-  static propTypes = {
+interface IProps {
+  match: {
+    params: {
+      id: string
+    }
+  }
+}
+
+interface IState {
+  topic: IArticle
+}
+
+class Topic extends React.Component<IProps, IState> {
+  public static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.node,
@@ -24,23 +37,23 @@ class Topic extends React.Component {
     }).isRequired
   }
 
-  constructor () {
-    super()
+  constructor(props: IProps) {
+    super(props)
     this.state = {
-      topic: {}
+      topic: {} as IArticle
     }
   }
 
-  componentDidMount () {
+  public componentDidMount() {
     this.fetchData(this.props.match.params.id)
   }
 
-  componentWillReceiveProps (prevProps) {
+  public componentWillReceiveProps(prevProps: IProps) {
     this.fetchData(prevProps.match.params.id)
   }
 
   // eslint-disable-next-line class-methods-use-this
-  getHTML (html) {
+  public getHTML(html: string) {
     return {
       __html: html
     }
@@ -50,21 +63,20 @@ class Topic extends React.Component {
    * 封装接口调用
    * @param {string} id 帖子 id
    */
-  fetchData (id) {
-    getTopicById(id).then(res => {
+  public fetchData(id: string) {
+    getTopicById(id).then((res) => {
       this.setState({
         // 接口返回值打散放入 state
         topic: {
-          ...res.data,
-          ...res.data.author
+          ...res.data
         }
       })
     })
   }
 
-  render () {
+  public render() {
     if (!this.state.topic.id) {
-      return <Skeleton active />
+      return <Skeleton active={true} />
     }
     return (
       <div className={style.topic}>
@@ -77,8 +89,8 @@ class Topic extends React.Component {
               &nbsp;•&nbsp;
             </span>
             作者：
-            <Link to={`/user/${this.state.topic.loginname}`}>
-              {this.state.topic.loginname}
+            <Link to={`/user/${this.state.topic.author.loginname}`}>
+              {this.state.topic.author.loginname}
             </Link>
             &nbsp;•&nbsp;
             <span>
@@ -98,7 +110,7 @@ class Topic extends React.Component {
           <Reply data={this.state.topic.replies} />
         </div>
         <div className={style.right}>
-          <ProfilePanel loginname={this.state.topic.loginname} />
+          <ProfilePanel loginname={this.state.topic.author.loginname} />
           <OtherTopic />
           <RecentReply />
         </div>
